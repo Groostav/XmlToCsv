@@ -13,11 +13,15 @@ Parameters:
 			Has several elements
 		Contains Nested Documents -- how do we flatten documents?
 		Contains "escape-coded" elements -- as per http://stackoverflow.com/questions/1091945/where-can-i-get-a-list-of-the-xml-document-escape-characters
+			-- XML
 			has " as &quot; character
 			has ' as &apos; character
 			has < as &lt; character
 			has > as &gt; character
 			has & as &amp; character 
+			-- CSV
+			has value containing a comma
+			has value containing a newline
 		Contains non-printable characters
 		
 		-- his source code makes reference in several places to "duplicate tables", 
