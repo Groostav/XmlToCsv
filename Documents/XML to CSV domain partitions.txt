@@ -1,0 +1,37 @@
+First-glance Domain splitting:
+
+Parameters:
+	File input Path -- most of this is OS stuff
+		Exists
+		Has read permission to file
+		is edited externally while program runs
+		
+	XML data
+		Is List formatted -- contains an XML element list (eg several "customer" records)
+			Has no elements
+			Has single element
+			Has several elements
+		Contains Nested Documents -- how do we flatten documents?
+		Contains "escape-coded" elements -- as per http://stackoverflow.com/questions/1091945/where-can-i-get-a-list-of-the-xml-document-escape-characters
+			has " as &quot; character
+			has ' as &apos; character
+			has < as &lt; character
+			has > as &gt; character
+			has & as &amp; character 
+		Contains non-printable characters
+		
+		-- his source code makes reference in several places to "duplicate tables", 
+		-- but he might mean duplicate columns. Need to investigate what he means.
+		
+		Violates supplied schema -- supplies XML and a schema, but it fails the supplied schema
+		
+	File 
+		Is Empty
+		Is Massive -- what are the streaming characteristics? Do we exploit LINQ's lazyness?
+		
+	Schema -- most of this is handled by the DataSet, but it needs to be added properly, but what about under Linq?
+		Contains Restrictions
+			String
+			Numeric
+		-- theres ALOT you can do with a schema, how much do we wish to test
+		
