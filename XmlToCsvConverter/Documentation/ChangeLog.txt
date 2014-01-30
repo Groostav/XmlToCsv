@@ -1,0 +1,36 @@
+1.6.0
+-Solution Cleanup
+-Added XML test data and referenced it using DeploymentItem attribute. Requires Local.TestSettings to have deployment enabled and reference the xml source directory or file. 
+-In GUI the initially selected value is now Default instead of Unicode.
+-In GUI, added new feature to automatically rename a 'table' element to prevent naming clashes between tables and columns occurs, which otherwise result in a DuplicateNameException.
+-In GUI, removed the gridview to display column names, replaced with more appropriate ListBox.
+-In GUI, added new feature to preview contents of a XML node on a RTF textbox.
+-Bug fix: DuplicateName: A column named 'bla' already belongs to this DataTable: cannot set a nested table name to the same name.
+-Bug fix: encoding was not working correctly in XmlToCsvUsingLinq class when converted XML.
+
+===============================================
+
+1.5.0
+-Added a console application to support command line execution.
+-Command line parsing thanks to http://cmdline.codeplex.com/
+===============================================
+
+1.4.0
+-Feature has been added that allows the user to preview the column names that are in each "table" in the selected xml file.
+-All tables contained withing the XML file are saved by default now. Previous version had an option to save single table which was the default behavior selected by default. 
+-Default encoding sis now set to UTF8
+-Fixed an issue that showed up when cancelling out tof the save file dialogue.
+-Overall fixes and improvements in GUI.
+===============================================
+
+1.3.0
+-Upgrade from C# 3.0 to C#4.0 in order to allow programming with TaskParallel.
+-Replace one XML parse method with ParallelTask.
+-Handle XmlException error in GUI when selecting a non-compliant XML file.
+-Handle ArgumentException thrown in case a well-formed XML document contains unsupported nested data.
+===============================================
+
+1.2.0
+-Convert Solution from VS2008 to VS2010
+-Change Unit Test Framework from NUnit to MSTest
+-Code Cleanup (mostly removal of unused namespaces and code readability improvements)
