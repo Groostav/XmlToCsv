@@ -26,6 +26,9 @@ Parameters:
 		
 		-- his source code makes reference in several places to "duplicate tables", 
 		-- but he might mean duplicate columns. Need to investigate what he means.
+			-- the tables I assume means the highest-level subdivision of the XML file.
+			-- for instance translink's bus route one has multiple tables, one for each route.
+			-- Edwin
 		
 		Violates supplied schema -- supplies XML and a schema, but it fails the supplied schema
 		
