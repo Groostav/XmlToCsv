@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moor.XmlConversionLibrary;
 using Moor.XmlConversionLibrary.XmlToCsvStrategy;
 
 namespace XmlToCsvTests
@@ -74,6 +77,50 @@ namespace XmlToCsvTests
             {
                 context.Execute(xmlTableName, @"ErrorDuplicateName_" + xmlTableName + ".csv", Encoding.Default);
             }
+        }
+
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("None")]
+        [XMLValidity("Valid")]
+        [XMLContent("List formatted")]
+        public void when_converting_one_table_with_a_list_of_items()
+        {
+            const string path = @"BusStops.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const String actual = @"BusStops.csv";
+            const String expected = @"BusStops.expected.csv";
+
+            AssertContentsAreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        [Tables("Many")]
+        [DuplicateColumns("None")]
+        [XMLValidity("Valid")]
+        [XMLContent("List formatted")]
+        public void when_converting_blagh_1()
+        {
+            
+        }
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("None")]
+        [XMLValidity("Valid")]
+        [XMLContent("List formatted")]
+        public void when_converting_blagh_2()
+        {
+            
+        }
+
+
+        private void AssertContentsAreEqual(string pathToActualResults, string pathToExpectedResults)
+        {
+            throw new NotImplementedException();
         }
     }
 }
