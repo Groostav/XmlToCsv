@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moor.XmlConversionLibrary;
@@ -77,139 +78,6 @@ namespace XmlToCsvTests
             {
                 context.Execute(xmlTableName, @"ErrorDuplicateName_" + xmlTableName + ".csv", Encoding.Default);
             }
-        }
-
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("None")]
-        [XMLValidity("Valid")]
-        [XMLContent("List formatted")]
-        public void when_converting_one_table_with_a_list_of_items()
-        {
-            const string path = @"BusStops.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            const String actual = @"BusStops.csv";
-            const String expected = @"BusStops.expected.csv";
-
-            AssertContentsAreEqual(actual, expected);
-        }
-
-        [TestMethod]
-        [Tables("Many")]
-        [DuplicateColumns("None")]
-        [XMLValidity("Valid")]
-        [XMLContent("List formatted")]
-        public void when_converting_blagh_1()
-        {
-            
-        }
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("None")]
-        [XMLValidity("Valid")]
-        [XMLContent("List formatted")]
-        public void when_converting_blagh_2()
-        {
-            
-        }
-
-        //Edwin's Code
-        [TestMethod]
-        [Tables("Many")]
-        [DuplicateColumns("None")]
-        [XMLValidity("Valid")]
-        [XMLContent("RSS formatted")]
-        // Since there are many tables, numOutput should equal numTables.
-        public void when_converting_many_tables_duplicate_columns()
-        {
-            const string path = @"engadget.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            //Number of actual output CSV should equal number of tables.
-            //int numTables;
-            //int numOutput;
-            const String actual = @"engadget.item.converted.csv";
-            const String expected = @"engadget.item.expected.csv";
-
-            AssertContentsAreEqual(actual, expected);
-            //Assert(numTables == numOutput);
-        }
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("No")]
-        [XMLValidity("Invalid")]
-        [XMLContent("List formatted")]
-        
-        public void when_converting_invalid_xml()
-        {
-            const string path = @"malformed.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("Yes")]
-        [XMLValidity("Invalid")]
-        [XMLContent("List formatted")]
-
-        public void when_converting_invalid_xml_duplicate_columns()
-        {
-            const string path = @"duplicate-malformed.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            Assert.Fail();
-        }
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("No")]
-        [XMLValidity("Valid")]
-        [XMLContent("RSS formatted")]
-
-        public void when_converting_rss_one_table()
-        {
-            const string path = @"toms-one-table.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            const String actual = @"rss.csv";
-            const String expected = @"toms.onetable.rss.csv";
-
-            AssertContentsAreEqual(actual, expected);
-        }
-
-        [TestMethod]
-        [Tables("One")]
-        [DuplicateColumns("Yes")]
-        [XMLValidity("Valid")]
-        [XMLContent("List formatted")]
-
-        public void when_converting_many_tables_and_duplicate_columns()
-        {
-            const string path = @"duplicate-single-table.xml";
-
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            const String actual = @"DUPE.csv";
-            const String expected = @"DUPE.expected.csv";
-
-            AssertContentsAreEqual(actual, expected);
-        }
-
-
-        private void AssertContentsAreEqual(string pathToActualResults, string pathToExpectedResults)
-        {
-            throw new NotImplementedException();
         }
     }
 }

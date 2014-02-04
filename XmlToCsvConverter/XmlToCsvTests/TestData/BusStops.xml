@@ -1,10 +1,10 @@
-<Stops>
-	<Stop>
+<BusStops>
+	<BusStop>
 		<Number>15</Number>
 		<Name>Hastings</Name>
-	</Stop>
-	<Stop>
+	</BusStop>
+  <BusStop>
 		<Number>16</Number>
 		<Name>Arbutus</Name>
-	</Stop>
-</Stops>
+	</BusStop>
+</BusStops>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -25,6 +26,14 @@ namespace XmlToCsvTests
             {
                 Assert.Fail("Exception of type {0} expected; got exception of type {1}", typeof(TException).Name, ex.GetType().Name);
             }
+        }
+
+        public static void AssertContentsAreEqual(string pathToActualResults, string pathToExpectedResults)
+        {
+            var actualContent = File.ReadAllText(pathToActualResults);
+            var expectedContent = File.ReadAllText(pathToExpectedResults);
+
+            Assert.AreEqual(expectedContent, actualContent);
         }
     }
 }
