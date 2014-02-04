@@ -117,6 +117,62 @@ namespace XmlToCsvTests
             
         }
 
+        //Edwin's Code
+        [TestMethod]
+        [Tables("Many")]
+        [DuplicateColumns("None")]
+        [XMLValidity("Valid")]
+        [XMLContent("List formatted")]
+        // Since there are many tables, numOutput should equal numTables.
+        public void when_converting_many_tables_duplicate_columns()
+        {
+            const string path = @"engadget.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            //Number of actual output CSV should equal number of tables.
+            //int numTables;
+            //int numOutput;
+            const String actual = @"engadget.item.converted.csv";
+            const String expected = @"engadget.item.expected.csv";
+
+            AssertContentsAreEqual(actual, expected);
+            //Assert(numTables == numOutput);
+        }
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("No")]
+        [XMLValidity("Invalid")]
+        [XMLContent("List formatted")]
+        
+        public void when_converting_invalid_xml()
+        {
+            const string path = @"malformed.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("Yes")]
+        [XMLValidity("Valid")]
+        [XMLContent("List formatted")]
+
+        public void when_converting_many_tables_and_duplicate_columns()
+        {
+            const string path = @"duplicate-single.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const String actual = @"DUPE.csv";
+            const String expected = @"DUPE.expected.csv";
+
+            AssertContentsAreEqual(actual, expected);
+        }
+
 
         private void AssertContentsAreEqual(string pathToActualResults, string pathToExpectedResults)
         {
