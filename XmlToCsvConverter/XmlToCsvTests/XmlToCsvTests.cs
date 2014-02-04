@@ -122,7 +122,7 @@ namespace XmlToCsvTests
         [Tables("Many")]
         [DuplicateColumns("None")]
         [XMLValidity("Valid")]
-        [XMLContent("List formatted")]
+        [XMLContent("RSS formatted")]
         // Since there are many tables, numOutput should equal numTables.
         public void when_converting_many_tables_duplicate_columns()
         {
@@ -158,12 +158,45 @@ namespace XmlToCsvTests
         [TestMethod]
         [Tables("One")]
         [DuplicateColumns("Yes")]
+        [XMLValidity("Invalid")]
+        [XMLContent("List formatted")]
+
+        public void when_converting_invalid_xml_duplicate_columns()
+        {
+            const string path = @"duplicate-malformed.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            Assert.Fail();
+        }
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("No")]
+        [XMLValidity("Valid")]
+        [XMLContent("RSS formatted")]
+
+        public void when_converting_rss_one_table()
+        {
+            const string path = @"toms-one-table.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const String actual = @"rss.csv";
+            const String expected = @"toms.onetable.rss.csv";
+
+            AssertContentsAreEqual(actual, expected);
+        }
+
+        [TestMethod]
+        [Tables("One")]
+        [DuplicateColumns("Yes")]
         [XMLValidity("Valid")]
         [XMLContent("List formatted")]
 
         public void when_converting_many_tables_and_duplicate_columns()
         {
-            const string path = @"duplicate-single.xml";
+            const string path = @"duplicate-single-table.xml";
 
             XMLtoCsvConverter.ConvertTables(path, ".");
 
