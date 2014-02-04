@@ -100,4 +100,17 @@ namespace XmlToCsvTests
             this.NamespacedElements = namespacedElements;
         }
     }
+
+    /// <summary>
+    /// Exist | Do Not Exist
+    /// </summary>
+    public class SpecialCharactersAttribute : DomainPartition
+    {
+        public string SpecialCharacters { get; private set; }
+
+        public SpecialCharactersAttribute(string specialCharacters)
+        {
+            SpecialCharacters = specialCharacters;
+        }
+    }
 }

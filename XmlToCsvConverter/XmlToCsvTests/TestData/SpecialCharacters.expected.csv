@@ -1,0 +1,4 @@
+Name,Value,Problem
+"Coffee Cup","☕","Unicode 16-bit character"
+"Quote","""","Escapes quotes in resulting CSV"
+"Ampersand","&","escapes XML encoding"

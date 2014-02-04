@@ -18,6 +18,7 @@ namespace XmlToCsvTests
         [XmlAttributes("Do Not Exist")]
         [XmlNamespaceSpecificElements("Do Not Exist")]
         [XmlFormattingWhitespace("Exists")]
+        [SpecialCharacters("Do Not Exist")]
         public void when_converting_hand_written_simple_XML()
         {
             const string path = @"BusStops.xml";
@@ -40,6 +41,7 @@ namespace XmlToCsvTests
         [XmlAttributes("Do Not Exist")]
         [XmlNamespaceSpecificElements("Do Not Exist")]
         [XmlFormattingWhitespace("Exist")]
+        [SpecialCharacters("Do Not Exist")]
         public void when_converting_rss_xml_object()
         {
             const string path = @"engadget.xml";
@@ -70,6 +72,7 @@ namespace XmlToCsvTests
         [XmlAttributes("Exist")]
         [XmlNamespaceSpecificElements("Do Not Exist")]
         [XmlFormattingWhitespace("Exists")]
+        [SpecialCharacters("Do Not Exist")]
         public void when_converting_document_with_attributes()
         {
             const string path = @"DataWithDifferentAttributes.xml";
@@ -92,6 +95,7 @@ namespace XmlToCsvTests
         [XmlAttributes("Does Not Exist")]
         [XmlNamespaceSpecificElements("Do Not Exist")]
         [XmlFormattingWhitespace("Exists")]
+        [SpecialCharacters("Do Not Exist")]
         public void when_converting_xml_with_nested_lists()
         {
             const string path = @"TreeLike.xml";
@@ -124,6 +128,29 @@ namespace XmlToCsvTests
             const string path = "DNE.xml";
 
             TestHelper.Throws<FileNotFoundException>(() => XMLtoCsvConverter.ConvertTables(path, "."));
+        }
+
+        [TestMethod]
+        [FilePathValidity("Valid")]
+        [XmlContent("Simple Document Set")]
+        [XmlValidity("Valid")]
+        [Tables("One")]
+        [XmlAttributes("Does Not Exist")]
+        [XmlNamespaceSpecificElements("Do Not Exist")]
+        [XmlFormattingWhitespace("Exists")]
+        [SpecialCharacters("Exist")]
+        public void when_transcoding_utf16_xml_with_special_characters()
+        {
+            const string path = @"SpecialCharacters.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const string actual = @"SpecialCharacter.csv";
+            const string expected = @"SpecialCharacters.expected.csv";
+
+            TestHelper.AssertContentsAreEqual(actual, expected);
+
+            File.Delete(actual);
         }
     }
 }
