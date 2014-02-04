@@ -24,7 +24,7 @@ namespace XmlToCsvTests
     }
 
     /// <summary>
-    /// Simple Document | Contains Nested Document | Contains Nested dynamic-length-list
+    /// Simple Document Set | Contains Nested Documents | Contains Nested dynamic-length-list
     /// </summary>
     public class XmlContent : DomainPartition
     {
@@ -85,6 +85,19 @@ namespace XmlToCsvTests
         public XmlFormattingWhitespace(string whitespace)
         {
             this.Whitespace = whitespace;
+        }
+    }
+
+    /// <summary>
+    /// Exist | Do Not Exist
+    /// </summary>
+    public class XmlNamespaceSpecificElements : DomainPartition
+    {
+        public string NamespacedElements { get; private set; }
+
+        public XmlNamespaceSpecificElements(string namespacedElements)
+        {
+            this.NamespacedElements = namespacedElements;
         }
     }
 }

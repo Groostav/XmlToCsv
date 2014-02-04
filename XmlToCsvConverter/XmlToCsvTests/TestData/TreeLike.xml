@@ -1,0 +1,21 @@
+<Node>
+  <Name>Everard</Name>
+  <Node>
+    <Name>Bob</Name>
+  </Node>
+  <Node>
+    <Name>Ken</Name>
+  </Node>
+  <Node>
+    <Name>James</Name>
+    <Node>
+      <Name>Molly</Name>
+    </Node>
+    <Node>
+      <Name>Betty</Name>
+    </Node>
+    <Node>
+      <Name>Angela</Name>
+    </Node>
+  </Node>
+</Node>

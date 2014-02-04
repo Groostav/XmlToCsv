@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.IO;
+using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moor.XmlConversionLibrary;
 
@@ -10,11 +11,12 @@ namespace XmlToCsvTests
     {
 
         [TestMethod]
-        [Tables("one")]
         [FilePathValidity("Valid")]
+        [XmlContent("Simple Document Set")]
         [XmlValidity("Valid")]
-        [XmlContent("Simple Document")]
+        [Tables("One")]
         [XmlAttributes("Do Not Exist")]
+        [XmlNamespaceSpecificElements("Do Not Exist")]
         [XmlFormattingWhitespace("Exists")]
         public void when_converting_hand_written_simple_XML()
         {
@@ -26,25 +28,82 @@ namespace XmlToCsvTests
             const String expected = @"BusStops.expected.csv";
 
             TestHelper.AssertContentsAreEqual(actual, expected);   
+
+            File.Delete(actual);
         }
 
         [TestMethod]
-        [Tables("One")]
         [FilePathValidity("Valid")]
+        [XmlContent("Contains ")]
         [XmlValidity("Valid")]
-        [XmlContent("Simple Document")]
-        [XmlAttributes("Exist")]
-        [XmlFormattingWhitespace("Does Not Exist")]
+        [Tables("One")]
+        [XmlAttributes("Do Not Exist")]
+        [XmlNamespaceSpecificElements("Do Not Exist")]
+        [XmlFormattingWhitespace("Exist")]
         public void when_converting_rss_xml_object()
         {
             const string path = @"engadget.xml";
 
             XMLtoCsvConverter.ConvertTables(path, ".");
 
-            const String actual = @"engadget.item.converted.csv";
-            const String expected = @"engadget.item.expected.csv";
+            foreach (var tuple in new []{new []{"item.csv", "engadget.item.expected.csv"}, 
+                                         new []{"channel.csv", "engadget.channel.expected.csv"},
+                                         new []{"rss.csv", "engadget.rss.expected.csv"},
+                                         new []{"guid.csv", "engadget.guid.expected.csv"},
+                                         new []{"image.csv", "engadget.image.expected.csv"}})
+            {
+                var actual = tuple[0];
+                var expected = tuple[1];
 
-            TestHelper.AssertContentsAreEqual(actual, expected);            
+                TestHelper.AssertContentsAreEqual(actual, expected);
+
+                File.Delete(actual);
+            }
+
+        }
+
+        [TestMethod]
+        [FilePathValidity("Valid")]
+        [XmlContent("Simple Document Set")]
+        [XmlValidity("Valid")]
+        [Tables("One")]
+        [XmlAttributes("Exist")]
+        [XmlNamespaceSpecificElements("Do Not Exist")]
+        [XmlFormattingWhitespace("Exists")]
+        public void when_converting_document_with_attributes()
+        {
+            const string path = @"DataWithDifferentAttributes.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const String actual = @"DataWithDifferentAttributes.csv";
+            const String expected = @"DataWithDifferentAttributes.expected.csv";
+
+            TestHelper.AssertContentsAreEqual(actual, expected);
+
+            File.Delete(actual);
+        }
+
+        [TestMethod]
+        [FilePathValidity("Valid")]
+        [XmlContent("Contains Nested dynamic-length-list")]
+        [XmlValidity("Valid")]
+        [Tables("One")]
+        [XmlAttributes("Does Not Exist")]
+        [XmlNamespaceSpecificElements("Do Not Exist")]
+        [XmlFormattingWhitespace("Exists")]
+        public void when_converting_xml_with_nested_lists()
+        {
+            const string path = @"TreeLike.xml";
+
+            XMLtoCsvConverter.ConvertTables(path, ".");
+
+            const string actual = @"Node.csv";
+            const string expected = @"TreeLike.expected.csv";
+
+            TestHelper.AssertContentsAreEqual(actual, expected);
+
+            File.Delete(actual);
         }
 
         [TestMethod]
@@ -53,25 +112,18 @@ namespace XmlToCsvTests
         {
             const string path = @"malformed.xml";
 
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            Assert.Fail();
+            TestHelper.Throws<XmlException>(
+                () => XMLtoCsvConverter.ConvertTables(path, "."), 
+                "Unexpected end tag. Line 4, position 11.");
         }
 
         [TestMethod]
-        [Tables("One")]
-        [XmlValidity("Valid")]
-        [XmlContent("Exists")]
-        public void when_converting_rss_one_table()
+        [FilePathValidity("Invalid")]
+        public void when_asked_to_convert_non_existent_file()
         {
-            const string path = @"toms-one-table.xml";
+            const string path = "DNE.xml";
 
-            XMLtoCsvConverter.ConvertTables(path, ".");
-
-            const String actual = @"rss.csv";
-            const String expected = @"toms.onetable.rss.expected.csv";
-
-            TestHelper.AssertContentsAreEqual(actual, expected);
+            TestHelper.Throws<FileNotFoundException>(() => XMLtoCsvConverter.ConvertTables(path, "."));
         }
     }
 }
